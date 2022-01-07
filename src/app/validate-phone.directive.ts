@@ -17,7 +17,7 @@ export const phoneValidator = (control: AbstractControl): ValidationErrors | nul
     multi: true
   }]
 })
-export class ValidatePhoneDirective implements Validator{
+export class ValidatePhoneDirective implements Validator {
   validate(control: AbstractControl): ValidationErrors | null {
     return phoneValidator(control);
   }

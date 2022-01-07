@@ -1,5 +1,5 @@
 <h4 class="text-center p-3 mb-3">Registration</h4>
-<form #f="ngForm" (ngSubmit)="onSubmit()">
+<form #f="ngForm" (ngSubmit)="saveUser()">
   <div class="row flex-column no-gutters">
     <div class="row no-gutters justify-content-between">
       <div class="form-group col">
@@ -125,5 +125,10 @@
 
   <!--  [disabled]="f.invalid"-->
 
-  <button type="submit" class="btn btn-info">Send</button>
+  <button type="submit" class="btn btn-info" [disabled]="isUploading || f.invalid">
+    <span *ngIf="!isUploading">Save</span>
+    <span *ngIf="isUploading" class="spinner-border spinner-border-sm">
+      <span class="sr-only">Loading...</span>
+    </span>
+  </button>
 </form>

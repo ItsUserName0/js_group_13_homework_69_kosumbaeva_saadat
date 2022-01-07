@@ -2,21 +2,27 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
-import { NewUserComponent } from './new-user/new-user.component';
+import { EditUserComponent } from './new-user/edit-user.component';
 import { FormsModule } from '@angular/forms';
 import { ValidatePhoneDirective } from './validate-phone.directive';
 import { ValidateCommentDirective } from './validate-comment.directive';
 import { HttpClientModule } from '@angular/common/http';
 import { ThanksComponent } from './thanks.component';
 import { AppRoutingModule } from './app-routing.module';
+import { ApplicationsComponent } from './applications/applications.component';
+import { ApplicationComponent } from './applications/application/application.component';
+import { ToolbarComponent } from './toolbar/toolbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NewUserComponent,
+    EditUserComponent,
     ValidatePhoneDirective,
     ValidateCommentDirective,
     ThanksComponent,
+    ApplicationsComponent,
+    ApplicationComponent,
+    ToolbarComponent,
   ],
   imports: [
     BrowserModule,
@@ -27,4 +33,5 @@ import { AppRoutingModule } from './app-routing.module';
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

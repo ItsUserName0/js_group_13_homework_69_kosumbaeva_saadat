@@ -1,0 +1,17 @@
+<div class="card my-4" *ngIf="user">
+  <h5 class="card-header">{{ user.lastName }} {{ user.firstName }} {{ user.patronymic }}</h5>
+  <div class="card-body">
+    <p class="card-text">Phone number: {{ user.phoneNumber }}</p>
+    <p class="card-text">place of work/study: {{ user.workStudyPlace }}</p>
+    <p class="card-text">Gender: {{ user.gender }}</p>
+    <p class="card-text">Size: {{ user.size }}</p>
+    <p class="card-text">Comment: {{ user.comment }}</p>
+    <a [routerLink]="['edit']" class="btn btn-secondary">Edit</a>&nbsp;
+    <button href="#" class="btn btn-danger" (click)="onRemove()" [disabled]="isRemoving">
+      <span *ngIf="!isRemoving">Delete</span>
+      <span class="spinner-border spinner-border-sm" *ngIf="isRemoving">
+        <span class="sr-only">Loading...</span>
+      </span>
+    </button>
+  </div>
+</div>
