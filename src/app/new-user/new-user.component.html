@@ -1,50 +1,129 @@
 <h4 class="text-center p-3 mb-3">Registration</h4>
-<form>
+<form #f="ngForm" (ngSubmit)="onSubmit()">
   <div class="row flex-column no-gutters">
     <div class="row no-gutters justify-content-between">
       <div class="form-group col">
         <label for="firstName">First name:</label>
-        <input type="text" class="form-control" id="firstName" name="firstName">
+        <input type="text"
+               class="form-control"
+               id="firstName"
+               name="firstName"
+               ngModel
+               required
+               #firstNameInput="ngModel">
+        <small class="form-text invalid-form-text" *ngIf="firstNameInput.touched && firstNameInput.errors?.required">Enter
+          your first name</small>
       </div>
       <div class="form-group col pl-3 pr-3">
         <label for="lastName">Last name:</label>
-        <input type="text" class="form-control" id="lastName" name="lastName">
+        <input type="text"
+               class="form-control"
+               id="lastName"
+               name="lastName"
+               ngModel
+               required
+               #lastNameInput="ngModel">
+        <small class="form-text invalid-form-text" *ngIf="lastNameInput.touched && lastNameInput.errors?.required">Enter
+          your last name</small>
       </div>
       <div class="form-group col">
         <label for="patronymic">Patronymic:</label>
-        <input type="text" class="form-control" id="patronymic" name="patronymic">
+        <input type="text"
+               class="form-control"
+               id="patronymic"
+               name="patronymic"
+               ngModel
+               required
+               #patronymicInput="ngModel">
+        <small class="form-text invalid-form-text" *ngIf="patronymicInput.touched && patronymicInput.errors?.required">Enter
+          your patronymic</small>
       </div>
     </div>
     <div class="form-group col-4">
       <label for="phoneNumber">Phone number:</label>
-      <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="+996-XXX-YYYYYY">
+      <input type="text"
+             class="form-control"
+             id="phoneNumber"
+             name="phoneNumber"
+             placeholder="+996-XXX-YYYYYY"
+             ngModel
+             required
+             appPhone
+             #phoneNumberInput="ngModel">
+      <small class="form-text invalid-form-text" *ngIf="phoneNumberInput.touched && phoneNumberInput.errors?.required">Enter
+        your phone number</small>
+      <small class="form-text invalid-form-text" *ngIf="phoneNumberInput.touched && phoneNumberInput.errors?.phone">Enter
+        a valid phone number</small>
     </div>
     <div class="form-group col-4">
       <label for="workStudyPlace">Place of work/study</label>
-      <input type="text" class="form-control" id="workStudyPlace" name="workStudyPlace">
+      <input type="text"
+             class="form-control"
+             id="workStudyPlace"
+             name="workStudyPlace"
+             ngModel
+             required
+             #workStudyPlaceInput="ngModel">
+      <small class="form-text invalid-form-text"
+             *ngIf="workStudyPlaceInput.touched && workStudyPlaceInput.errors?.required">Enter
+        your work/study place</small>
     </div>
     <div class="form-group row col-2 ml-1">
       <div class="form-check col">
-        <input class="form-check-input" type="radio" name="gender" id="male" value="male">
+        <input type="radio"
+               class="form-check-input"
+               id="male"
+               name="gender"
+               value="male"
+               ngModel
+               required>
         <label class="form-check-label" for="male">Male</label>
       </div>
       <div class="form-check col">
-        <input class="form-check-input" type="radio" name="gender" id="female" value="female">
+        <input type="radio"
+               class="form-check-input"
+               id="female"
+               name="gender"
+               value="female"
+               ngModel
+               required>
         <label class="form-check-label" for="female">Female</label>
       </div>
     </div>
     <div class="form-group col-2">
       <label class="my-1 mr-2" for="size">T-shirt size</label>
-      <select class="custom-select my-1 mr-sm-2" id="size">
+      <select class="custom-select my-1"
+              id="size"
+              name="size"
+              ngModel
+              required
+              #sizeInput="ngModel">
         <option value="s">S</option>
         <option value="m">M</option>
         <option value="l">L</option>
         <option value="xl">XL</option>
       </select>
+      <small class="form-text invalid-form-text" *ngIf="sizeInput.touched && sizeInput.errors?.required">Enter
+        your t-shirt size</small>
     </div>
     <div class="form-group col-4">
       <label for="comment">Comments</label>
-      <textarea class="form-control" id="comment" name="comment" placeholder="Input some text"></textarea>
+      <textarea class="form-control"
+                id="comment"
+                name="comment"
+                placeholder="Input some text"
+                ngModel
+                required
+                appComment
+                #commentInput="ngModel"></textarea>
+      <small class="form-text invalid-form-text" *ngIf="commentInput.touched && commentInput.errors?.required">Enter
+        your comment</small>
+      <small class="form-text invalid-form-text" *ngIf="commentInput.touched && commentInput.errors?.comment">The
+        maximum message length is 300 characters</small>
     </div>
   </div>
+
+  <!--  [disabled]="f.invalid"-->
+
+  <button type="submit" class="btn btn-primary">Send</button>
 </form>
