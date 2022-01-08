@@ -2,7 +2,7 @@ import { AbstractControl, NG_VALIDATORS, ValidationErrors, Validator } from '@an
 import { Directive } from '@angular/core';
 
 export const phoneValidator = (control: AbstractControl): ValidationErrors | null => {
-  const validNumber = /^[+][9][9][6]?[-\s]?[0-9]{3}?[-\s]?[0-9]{3}?[-\s]?[0-9]{3}$/.test(control.value);
+  const validNumber = /^[+][9][9][6]+[-\s]?([0-9]{3})+[-\s]?([0-9]{3})+[-\s]?([0-9]{3})$/.test(control.value);
   if (validNumber) {
     return null;
   }

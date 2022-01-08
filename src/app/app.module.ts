@@ -11,6 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { ApplicationsComponent } from './applications/applications.component';
 import { ApplicationComponent } from './applications/application/application.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
+import { EmptyComponent } from './empty.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
     ApplicationsComponent,
     ApplicationComponent,
     ToolbarComponent,
+    EmptyComponent,
   ],
   imports: [
     BrowserModule,
