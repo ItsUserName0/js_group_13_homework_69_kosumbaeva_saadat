@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { UserService } from '../user.service';
-import { User } from '../user.model';
+import { UserService } from '../shared/user.service';
+import { User } from '../shared/user.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
@@ -16,6 +16,7 @@ export class EditUserComponent implements OnInit {
   editedId = '';
   isUploading = false;
   userUploadingSubscription!: Subscription;
+  characters = '';
 
   constructor(private userService: UserService, private router: Router, private route: ActivatedRoute) {
   }
@@ -90,4 +91,10 @@ export class EditUserComponent implements OnInit {
     })
   }
 
+  onCommentInput() {
+    if (this.registrationForm.value.comment.length === 300) this.characters = '';
+    else {
+      this.characters = `Remaining characters: ${300 - this.registrationForm.value.comment.length}`;
+    }
+  }
 }

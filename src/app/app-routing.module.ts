@@ -4,7 +4,7 @@ import { ThanksComponent } from './thanks.component';
 import { EditUserComponent } from './new-user/edit-user.component';
 import { ApplicationsComponent } from './applications/applications.component';
 import { ApplicationComponent } from './applications/application/application.component';
-import { UserResolverService } from './user-resolver.service';
+import { UserResolverService } from './shared/user-resolver.service';
 
 const routes: Routes = [
   {

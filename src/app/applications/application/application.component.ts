@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { User } from '../../user.model';
+import { User } from '../../shared/user.model';
 import { ActivatedRoute, Data, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { UserService } from '../../user.service';
+import { UserService } from '../../shared/user.service';
 
 @Component({
   selector: 'app-application',

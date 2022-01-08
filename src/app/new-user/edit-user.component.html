@@ -114,16 +114,16 @@
                 placeholder="Input some text"
                 ngModel
                 required
-                appComment
-                #commentInput="ngModel"></textarea>
+                maxlength="300"
+                #commentInput="ngModel"
+                (input)="onCommentInput()"></textarea>
+      <small class="text-muted">{{ characters }}</small>
       <small class="form-text invalid-form-text" *ngIf="commentInput.touched && commentInput.errors?.required">Enter
         your comment</small>
-      <small class="form-text invalid-form-text" *ngIf="commentInput.touched && commentInput.errors?.comment">The
+      <small class="form-text invalid-form-text" *ngIf="commentInput.touched && commentInput.errors?.length">The
         maximum message length is 300 characters</small>
     </div>
   </div>
-
-  <!--  [disabled]="f.invalid"-->
 
   <button type="submit" class="btn btn-info" [disabled]="isUploading || f.invalid">
     <span *ngIf="!isUploading">Save</span>

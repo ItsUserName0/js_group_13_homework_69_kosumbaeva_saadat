@@ -4,8 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { EditUserComponent } from './new-user/edit-user.component';
 import { FormsModule } from '@angular/forms';
-import { ValidatePhoneDirective } from './validate-phone.directive';
-import { ValidateCommentDirective } from './validate-comment.directive';
+import { ValidatePhoneDirective } from './shared/validate-phone.directive';
 import { HttpClientModule } from '@angular/common/http';
 import { ThanksComponent } from './thanks.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -18,7 +17,6 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
     AppComponent,
     EditUserComponent,
     ValidatePhoneDirective,
-    ValidateCommentDirective,
     ThanksComponent,
     ApplicationsComponent,
     ApplicationComponent,
