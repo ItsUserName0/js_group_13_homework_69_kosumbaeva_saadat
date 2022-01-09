@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../shared/user.service';
 import { User } from '../shared/user.model';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -29,6 +29,7 @@ export class EditUserComponent implements OnInit, OnDestroy {
       phoneNumber: new FormControl('', [Validators.required, phoneValidator]),
       workStudyPlace: new FormControl('', Validators.required),
       gender: new FormControl('', Validators.required),
+      skills: new FormArray([], Validators.required),
       size: new FormControl('', Validators.required),
       comment: new FormControl('', [Validators.required, Validators.maxLength(300)]),
     });
@@ -41,7 +42,7 @@ export class EditUserComponent implements OnInit, OnDestroy {
       if (user) {
         this.isEdit = true;
         this.editedId = user.id;
-        this.setFormValue({
+        this.registrationForm.patchValue({
           firstName: user.firstName,
           lastName: user.lastName,
           patronymic: user.patronymic,
@@ -50,11 +51,11 @@ export class EditUserComponent implements OnInit, OnDestroy {
           gender: user.gender,
           size: user.size,
           comment: user.comment
-        })
+        });
       } else {
         this.isEdit = false;
         this.editedId = '';
-        this.setFormValue({
+        this.registrationForm.patchValue({
           firstName: '',
           lastName: '',
           patronymic: '',
@@ -63,9 +64,14 @@ export class EditUserComponent implements OnInit, OnDestroy {
           gender: '',
           size: '',
           comment: ''
-        })
+        });
       }
-    })
+    });
+  }
+
+  setStyle() {
+    const skills = <FormArray>this.registrationForm.controls['skills'];
+    return skills.length;
   }
 
   fieldHasError(fieldName: string, errorType: string) {
@@ -83,6 +89,7 @@ export class EditUserComponent implements OnInit, OnDestroy {
       this.registrationForm.value.phoneNumber,
       this.registrationForm.value.workStudyPlace,
       this.registrationForm.value.gender,
+      this.registrationForm.value.skills,
       this.registrationForm.value.size,
       this.registrationForm.value.comment);
 
@@ -100,16 +107,26 @@ export class EditUserComponent implements OnInit, OnDestroy {
     }
   }
 
-  setFormValue(value: { [key: string]: any }) {
-    this.registrationForm.patchValue(value);
-  }
-
   onCommentInput() {
     if (this.registrationForm.value.comment.length === 300) {
       return '';
     } else {
       return `Remaining characters: ${300 - this.registrationForm.value.comment.length}`;
     }
+  }
+
+  addSkill() {
+    const skills = <FormArray>this.registrationForm.get('skills');
+    const skillGroup = new FormGroup({
+      skillName: new FormControl('', Validators.required),
+      skillLevel: new FormControl('', Validators.required),
+    });
+    skills.push(skillGroup);
+  }
+
+  getSkillControls() {
+    const skills = <FormArray>this.registrationForm.get('skills');
+    return skills.controls;
   }
 
   ngOnDestroy(): void {

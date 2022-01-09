@@ -6,6 +6,7 @@ export class User {
               public phoneNumber: number,
               public workStudyPlace: string,
               public gender: string,
+              public skills: [{skillName: string, skillLevel: string}],
               public size: string,
               public comment: string) {
   }

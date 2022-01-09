@@ -23,7 +23,7 @@ export class UserService {
       .pipe(map(result => {
         return Object.keys(result).map(id => {
           const data = result[id];
-          return new User(id, data.firstName, data.lastName, data.patronymic, data.phoneNumber, data.workStudyPlace, data.gender, data.size, data.comment);
+          return new User(id, data.firstName, data.lastName, data.patronymic, data.phoneNumber, data.workStudyPlace, data.gender, data.skills, data.size, data.comment);
         })
       }))
       .subscribe(result => {
@@ -39,7 +39,7 @@ export class UserService {
     return this.http.get<User | null>(`https://skosumbaeva2502-default-rtdb.firebaseio.com/users/${id}.json`).pipe(
       map(result => {
         if (!result) return null;
-        return new User(id, result.firstName, result.lastName, result.patronymic, result.phoneNumber, result.workStudyPlace, result.gender, result.size, result.comment);
+        return new User(id, result.firstName, result.lastName, result.patronymic, result.phoneNumber, result.workStudyPlace, result.gender, result.skills, result.size, result.comment);
       })
     );
   }
@@ -52,6 +52,7 @@ export class UserService {
       phoneNumber: user.phoneNumber,
       workStudyPlace: user.workStudyPlace,
       gender: user.gender,
+      skills: user.skills,
       size: user.size,
       comment: user.comment
     };
@@ -68,6 +69,7 @@ export class UserService {
       phoneNumber: user.phoneNumber,
       workStudyPlace: user.workStudyPlace,
       gender: user.gender,
+      skills: user.skills,
       size: user.size,
       comment: user.comment
     }
