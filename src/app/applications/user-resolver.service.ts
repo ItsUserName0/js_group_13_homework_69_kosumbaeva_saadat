@@ -1,8 +1,8 @@
 import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router';
-import { User } from './user.model';
+import { User } from '../shared/user.model';
 import { Injectable } from '@angular/core';
 import { EMPTY, Observable, of } from 'rxjs';
-import { UserService } from './user.service';
+import { UserService } from '../shared/user.service';
 import { mergeMap } from 'rxjs/operators';
 
 @Injectable({

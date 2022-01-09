@@ -1,27 +1,37 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../shared/user.service';
 import { User } from '../shared/user.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { phoneValidator } from '../shared/validate-phone.directive';
 
 @Component({
   selector: 'app-new-user',
   templateUrl: './edit-user.component.html',
   styleUrls: ['./edit-user.component.css']
 })
-export class EditUserComponent implements OnInit {
-  @ViewChild('f') registrationForm!: NgForm;
+export class EditUserComponent implements OnInit, OnDestroy {
+  registrationForm!: FormGroup;
   isEdit = false;
   editedId = '';
   isUploading = false;
   userUploadingSubscription!: Subscription;
-  characters = '';
 
   constructor(private userService: UserService, private router: Router, private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
+    this.registrationForm = new FormGroup({
+      firstName: new FormControl('', Validators.required),
+      lastName: new FormControl('', Validators.required),
+      patronymic: new FormControl('', Validators.required),
+      phoneNumber: new FormControl('', [Validators.required, phoneValidator]),
+      workStudyPlace: new FormControl('', Validators.required),
+      gender: new FormControl('', Validators.required),
+      size: new FormControl('', Validators.required),
+      comment: new FormControl('', [Validators.required, Validators.maxLength(300)]),
+    });
     this.userUploadingSubscription = this.userService.userUploading.subscribe(isUploading => {
       this.isUploading = isUploading;
     })
@@ -58,6 +68,11 @@ export class EditUserComponent implements OnInit {
     })
   }
 
+  fieldHasError(fieldName: string, errorType: string) {
+    const field = this.registrationForm.get(fieldName);
+    return field && field.touched && field.errors?.[errorType];
+  }
+
   saveUser() {
     const id = this.editedId || Math.random().toString();
 
@@ -86,15 +101,18 @@ export class EditUserComponent implements OnInit {
   }
 
   setFormValue(value: { [key: string]: any }) {
-    setTimeout(() => {
-      this.registrationForm.form.setValue(value);
-    })
+    this.registrationForm.patchValue(value);
   }
 
   onCommentInput() {
-    if (this.registrationForm.value.comment.length === 300) this.characters = '';
-    else {
-      this.characters = `Remaining characters: ${300 - this.registrationForm.value.comment.length}`;
+    if (this.registrationForm.value.comment.length === 300) {
+      return '';
+    } else {
+      return `Remaining characters: ${300 - this.registrationForm.value.comment.length}`;
     }
+  }
+
+  ngOnDestroy(): void {
+    this.userUploadingSubscription.unsubscribe();
   }
 }

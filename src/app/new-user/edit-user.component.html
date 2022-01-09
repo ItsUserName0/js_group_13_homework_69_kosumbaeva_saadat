@@ -1,5 +1,5 @@
 <h4 class="text-center p-3 mb-3">Registration</h4>
-<form #f="ngForm" (ngSubmit)="saveUser()">
+<form [formGroup]="registrationForm" (ngSubmit)="saveUser()">
   <div class="row flex-column no-gutters">
     <div class="row no-gutters justify-content-between">
       <div class="form-group col">
@@ -7,11 +7,8 @@
         <input type="text"
                class="form-control"
                id="firstName"
-               name="firstName"
-               ngModel
-               required
-               #firstNameInput="ngModel">
-        <small class="form-text invalid-form-text" *ngIf="firstNameInput.touched && firstNameInput.errors?.required">Enter
+               formControlName="firstName">
+        <small class="form-text invalid-form-text" *ngIf="fieldHasError('firstName', 'required')">Enter
           your first name</small>
       </div>
       <div class="form-group col pl-3 pr-3">
@@ -19,11 +16,8 @@
         <input type="text"
                class="form-control"
                id="lastName"
-               name="lastName"
-               ngModel
-               required
-               #lastNameInput="ngModel">
-        <small class="form-text invalid-form-text" *ngIf="lastNameInput.touched && lastNameInput.errors?.required">Enter
+               formControlName="lastName">
+        <small class="form-text invalid-form-text" *ngIf="fieldHasError('lastName', 'required')">Enter
           your last name</small>
       </div>
       <div class="form-group col">
@@ -31,11 +25,8 @@
         <input type="text"
                class="form-control"
                id="patronymic"
-               name="patronymic"
-               ngModel
-               required
-               #patronymicInput="ngModel">
-        <small class="form-text invalid-form-text" *ngIf="patronymicInput.touched && patronymicInput.errors?.required">Enter
+               formControlName="patronymic">
+        <small class="form-text invalid-form-text" *ngIf="fieldHasError('patronymic', 'required')">Enter
           your patronymic</small>
       </div>
     </div>
@@ -44,15 +35,11 @@
       <input type="text"
              class="form-control"
              id="phoneNumber"
-             name="phoneNumber"
-             placeholder="+996-XXX-YYYYYY"
-             ngModel
-             required
-             appPhone
-             #phoneNumberInput="ngModel">
-      <small class="form-text invalid-form-text" *ngIf="phoneNumberInput.touched && phoneNumberInput.errors?.required">Enter
+             formControlName="phoneNumber"
+             placeholder="+996-XXX-YYYYYY">
+      <small class="form-text invalid-form-text" *ngIf="fieldHasError('phoneNumber', 'required')">Enter
         your phone number</small>
-      <small class="form-text invalid-form-text" *ngIf="phoneNumberInput.touched && phoneNumberInput.errors?.phone">Enter
+      <small class="form-text invalid-form-text" *ngIf="fieldHasError('phoneNumber', 'phone')">Enter
         a valid phone number</small>
     </div>
     <div class="form-group col-4">
@@ -60,12 +47,9 @@
       <input type="text"
              class="form-control"
              id="workStudyPlace"
-             name="workStudyPlace"
-             ngModel
-             required
-             #workStudyPlaceInput="ngModel">
+             formControlName="workStudyPlace">
       <small class="form-text invalid-form-text"
-             *ngIf="workStudyPlaceInput.touched && workStudyPlaceInput.errors?.required">Enter
+             *ngIf="fieldHasError('workStudyPlace', 'required')">Enter
         your work/study place</small>
     </div>
     <div class="form-group row col-2 ml-1">
@@ -73,20 +57,16 @@
         <input type="radio"
                class="form-check-input"
                id="male"
-               name="gender"
-               value="male"
-               ngModel
-               required>
+               formControlName="gender"
+               value="male">
         <label class="form-check-label" for="male">Male</label>
       </div>
       <div class="form-check col">
         <input type="radio"
                class="form-check-input"
                id="female"
-               name="gender"
-               value="female"
-               ngModel
-               required>
+               formControlName="gender"
+               value="female">
         <label class="form-check-label" for="female">Female</label>
       </div>
     </div>
@@ -94,38 +74,31 @@
       <label class="my-1 mr-2" for="size">T-shirt size</label>
       <select class="custom-select my-1"
               id="size"
-              name="size"
-              ngModel
-              required
-              #sizeInput="ngModel">
+              formControlName="size">
         <option value="s">S</option>
         <option value="m">M</option>
         <option value="l">L</option>
         <option value="xl">XL</option>
       </select>
-      <small class="form-text invalid-form-text" *ngIf="sizeInput.touched && sizeInput.errors?.required">Enter
+      <small class="form-text invalid-form-text" *ngIf="fieldHasError('size', 'required')">Enter
         your t-shirt size</small>
     </div>
     <div class="form-group col-4">
       <label for="comment">Comment</label>
       <textarea class="form-control"
                 id="comment"
-                name="comment"
+                formControlName="comment"
                 placeholder="Input some text"
-                ngModel
-                required
-                maxlength="300"
-                #commentInput="ngModel"
                 (input)="onCommentInput()"></textarea>
-      <small class="text-muted">{{ characters }}</small>
-      <small class="form-text invalid-form-text" *ngIf="commentInput.touched && commentInput.errors?.required">Enter
+      <small class="text-muted">{{ onCommentInput() }}</small>
+      <small class="form-text invalid-form-text" *ngIf="fieldHasError('comment', 'required')">Enter
         your comment</small>
-      <small class="form-text invalid-form-text" *ngIf="commentInput.touched && commentInput.errors?.length">The
+      <small class="form-text invalid-form-text" *ngIf="fieldHasError('comment', 'maxlength')">The
         maximum message length is 300 characters</small>
     </div>
   </div>
 
-  <button type="submit" class="btn btn-info" [disabled]="isUploading || f.invalid">
+  <button type="submit" class="btn btn-info" [disabled]="isUploading || registrationForm.invalid">
     <span *ngIf="!isUploading">Save</span>
     <span *ngIf="isUploading" class="spinner-border spinner-border-sm">
       <span class="sr-only">Loading...</span>
