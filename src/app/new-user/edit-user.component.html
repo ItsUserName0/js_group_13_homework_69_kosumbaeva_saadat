@@ -1,6 +1,6 @@
 <h4 class="text-center p-3 mb-3">Registration</h4>
 <form [formGroup]="registrationForm" (ngSubmit)="saveUser()">
-  <div class="row flex-column no-gutters">
+  <div class="row flex-column no-gutters mb-5">
     <div class="row no-gutters justify-content-between">
       <div class="form-group col">
         <label for="firstName">First name:</label>
@@ -130,12 +130,11 @@
       <small class="form-text invalid-form-text" *ngIf="fieldHasError('comment', 'maxlength')">The
         maximum message length is 300 characters</small>
     </div>
-  </div>
-
-  <button type="submit" class="btn btn-info" [disabled]="isUploading || registrationForm.invalid">
-    <span *ngIf="!isUploading">Save</span>
-    <span *ngIf="isUploading" class="spinner-border spinner-border-sm">
+    <button type="submit" class="btn btn-info col-1" [disabled]="isUploading || registrationForm.invalid">
+      <span *ngIf="!isUploading">Save</span>
+      <span *ngIf="isUploading" class="spinner-border spinner-border-sm">
       <span class="sr-only">Loading...</span>
     </span>
-  </button>
+    </button>
+  </div>
 </form>

@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../shared/user.service';
 import { User } from '../shared/user.model';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -12,13 +12,17 @@ import { phoneValidator } from '../shared/validate-phone.directive';
   styleUrls: ['./edit-user.component.css']
 })
 export class EditUserComponent implements OnInit, OnDestroy {
+  user!: User;
   registrationForm!: FormGroup;
-  isEdit = false;
-  editedId = '';
-  isUploading = false;
   userUploadingSubscription!: Subscription;
+  isEdit = false;
+  isUploading = false;
+  editedId = '';
 
-  constructor(private userService: UserService, private router: Router, private route: ActivatedRoute) {
+  constructor(private userService: UserService,
+              private router: Router,
+              private route: ActivatedRoute,
+              private formBuilder: FormBuilder) {
   }
 
   ngOnInit(): void {
@@ -35,22 +39,23 @@ export class EditUserComponent implements OnInit, OnDestroy {
     });
     this.userUploadingSubscription = this.userService.userUploading.subscribe(isUploading => {
       this.isUploading = isUploading;
-    })
+    });
     this.route.data.subscribe(data => {
-      const user = <User>data.user;
+      this.user = <User>data.user;
 
-      if (user) {
+      if (this.user) {
         this.isEdit = true;
-        this.editedId = user.id;
+        this.editedId = this.user.id;
+        this.seedForm();
         this.registrationForm.patchValue({
-          firstName: user.firstName,
-          lastName: user.lastName,
-          patronymic: user.patronymic,
-          phoneNumber: user.phoneNumber,
-          workStudyPlace: user.workStudyPlace,
-          gender: user.gender,
-          size: user.size,
-          comment: user.comment
+          firstName: this.user.firstName,
+          lastName: this.user.lastName,
+          patronymic: this.user.patronymic,
+          phoneNumber: this.user.phoneNumber,
+          workStudyPlace: this.user.workStudyPlace,
+          gender: this.user.gender,
+          size: this.user.size,
+          comment: this.user.comment
         });
       } else {
         this.isEdit = false;
@@ -69,8 +74,23 @@ export class EditUserComponent implements OnInit, OnDestroy {
     });
   }
 
+  getSkillsGroup(name: string, level: string): FormGroup {
+    return this.formBuilder.group({
+      skillName: [name, Validators.required],
+      skillLevel: [level, Validators.required]
+    });
+  }
+
+  seedForm() {
+    const skills = <FormArray>this.registrationForm.get('skills');
+    for (let i = 0; i < this.user.skills.length; i++) {
+      const skill = this.getSkillsGroup(this.user.skills[i].skillName, this.user.skills[i].skillLevel);
+      skills.push(skill);
+    }
+  }
+
   setStyle() {
-    const skills = <FormArray>this.registrationForm.controls['skills'];
+    const skills = <FormArray>this.registrationForm.get('skills');
     return skills.length;
   }
 

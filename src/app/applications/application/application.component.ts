@@ -35,6 +35,10 @@ export class ApplicationComponent implements OnInit, OnDestroy {
     })
   }
 
+  skillNameHandler(skillName: string) {
+    return skillName.split('-').join(' ');
+  }
+
   ngOnDestroy(): void {
     this.userRemovingSubscription.unsubscribe();
   }

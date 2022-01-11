@@ -24,7 +24,7 @@ export class UserService {
         return Object.keys(result).map(id => {
           const data = result[id];
           return new User(id, data.firstName, data.lastName, data.patronymic, data.phoneNumber, data.workStudyPlace, data.gender, data.skills, data.size, data.comment);
-        })
+        });
       }))
       .subscribe(result => {
         this.users = result;
@@ -56,7 +56,14 @@ export class UserService {
       size: user.size,
       comment: user.comment
     };
-    return this.http.post('https://skosumbaeva2502-default-rtdb.firebaseio.com/users.json', body);
+    this.userUploading.next(true);
+    return this.http.post('https://skosumbaeva2502-default-rtdb.firebaseio.com/users.json', body).pipe(
+      tap(() => {
+        this.userUploading.next(false);
+      }, () => {
+        this.userUploading.next(false);
+      })
+    );
   }
 
   editUser(user: User) {

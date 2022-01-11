@@ -8,7 +8,7 @@
       <p><strong>Skills:</strong></p>
       <ul>
         <li class="mb-2" *ngFor="let skill of user.skills">
-          <span><strong>{{ skill.skillName }}</strong></span>&nbsp;
+          <span><strong class="text-capitalize">{{skillNameHandler(skill.skillName)}}</strong></span>&nbsp;
           <span>({{ skill.skillLevel }})</span>
         </li>
       </ul>
@@ -16,7 +16,7 @@
     <p class="card-text"><strong>Size: </strong><span class="text-uppercase">{{ user.size }}</span></p>
     <p class="card-text"><strong>Comment:</strong> {{ user.comment }}</p>
     <a [routerLink]="['edit']" class="btn btn-secondary">Edit</a>&nbsp;
-    <button href="#" class="btn btn-danger" (click)="onRemove()" [disabled]="isRemoving">
+    <button class="btn btn-danger" (click)="onRemove()" [disabled]="isRemoving">
       <span *ngIf="!isRemoving">Delete</span>
       <span class="spinner-border spinner-border-sm" *ngIf="isRemoving">
         <span class="sr-only">Loading...</span>
