@@ -149,6 +149,14 @@ export class EditUserComponent implements OnInit, OnDestroy {
     return skills.controls;
   }
 
+  removeSkill(index: number) {
+    if (this.isEdit) {
+      this.userService.removeSkill(this.editedId, index.toString()).subscribe();
+    }
+    const skills = <FormArray>this.registrationForm.get('skills');
+    skills.removeAt(index);
+  }
+
   ngOnDestroy(): void {
     this.userUploadingSubscription.unsubscribe();
   }

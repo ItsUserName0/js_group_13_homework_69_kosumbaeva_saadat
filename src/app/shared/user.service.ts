@@ -101,4 +101,8 @@ export class UserService {
     )
   }
 
+  removeSkill(id: string, index: string) {
+    return this.http.delete(`https://skosumbaeva2502-default-rtdb.firebaseio.com/users/${id}/skills/${index}.json`);
+  }
+
 }

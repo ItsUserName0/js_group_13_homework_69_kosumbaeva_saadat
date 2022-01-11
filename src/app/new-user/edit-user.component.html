@@ -100,6 +100,7 @@
           </select>
           <small class="form-text invalid-form-text" *ngIf="fieldHasError('skillLevel', 'required')">Enter
             your level of skill</small>
+          <button type="button" class="btn btn-outline-danger" (click)="removeSkill(i)">Remove</button>
         </div>
       </div>
     </div>
